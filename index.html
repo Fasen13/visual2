@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision Analysis AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="brand-name">Vision AI</span>
+            </div>
+
+            <button class="theme-toggle-btn" onclick="toggleTheme()">
+                <span id="theme-icon">☀️</span> <span id="theme-text">Светлая тема</span>
+            </button>
+
+            <div class="sidebar-actions">
+                <button class="btn-main" onclick="openCreationPanel()">+ Новый проект</button>
+                <button class="btn-nlp" onclick="openProductPanel()">🛒 Оценить товар по ссылке</button>
+            </div>
+
+            <div class="nav-label">История исследований</div>
+            <nav class="history-list" id="historyList"></nav>
+        </aside>
+
+        <main class="workspace">
+            <div id="welcome-screen" class="centered-content">
+                <h1 class="glitch-text">Vision Analysis</h1>
+                <p class="subtitle">Интеллектуальный анализ отзывов</p>
+            </div>
+
+            <div id="chat-scroller" class="chat-viewport" style="display:none;">
+                <div id="chat-container" class="messages-stack"></div>
+            </div>
+
+            <footer class="input-console">
+                <div class="input-container-glass">
+                    <textarea id="userInput" placeholder="Введите текст отзыва для анализа..." rows="1"></textarea>
+                    <button class="btn-send" onclick="handleSend()">➤</button>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="overlay">
+        <div class="neo-modal">
+            <h3>Новый проект</h3>
+            <input type="text" id="newItemName" placeholder="Название проекта...">
+            <div class="modal-buttons">
+                <button onclick="closePanel()" class="btn-cancel">Отмена</button>
+                <button onclick="saveChat()" class="btn-confirm">Создать</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="productOverlay">
+        <div class="neo-modal">
+            <h3>Оценка товара</h3>
+            <input type="text" id="productUrl" placeholder="Ссылка на товар (Ozon/WB)...">
+            <input type="text" id="productNameHint" placeholder="Что это за товар? (например: Клавиатура Razer)">
+            <div style="height: 10px;"></div>
+            <textarea id="manualInfo" placeholder="Если скрейпинг не сработает — вставьте: название/характеристики/описание и (если есть) рейтинг/отзывы..." rows="4" style="width:100%; resize:none; display:none;"></textarea>
+            <div style="height: 10px;"></div>
+            <div class="modal-buttons">
+                <button onclick="closeProductPanel()" class="btn-cancel">Отмена</button>
+                <button onclick="evaluateByLink()" class="btn-confirm">Оценить по ссылке</button>
+                <button onclick="evaluateByManual()" class="btn-confirm" id="manualEvaluateBtn" style="display:none;">Оценить по ручным данным</button>
+            </div>
+            <div id="productStatus" style="margin-top:10px; opacity:0.75; font-size:0.9rem;"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

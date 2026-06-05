@@ -43,7 +43,7 @@ function sendJson(res, status, payload) {
 
 function resolveStaticPath(urlPath) {
     const safePath = path.normalize(urlPath).replace(/^(\.\.[/\\])+/, '');
-    const filePath = path.join(ROOT, safePath === path.sep ? 'index.html' : safePath);
+    const filePath = path.join(process.cwd(), safePath === path.sep ? 'index.html' : safePath);
     return filePath;
 }
 
@@ -118,12 +118,17 @@ const server = http.createServer(async (req, res) => {
     }
 
     const filePath = resolveStaticPath(url.pathname);
+    console.log(`Request: ${url.pathname} -> ${filePath}`);
+
     if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
         const ext = path.extname(filePath).toLowerCase();
-        res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
+        res.writeHead(200, { 
+            'Content-Type': MIME[ext] || 'application/octet-stream',
+            'Cache-Control': 'no-cache' 
+        });
         fs.createReadStream(filePath).pipe(res);
     } else {
-        const index = path.join(ROOT, 'index.html');
+        const index = path.join(process.cwd(), 'index.html');
         if (fs.existsSync(index)) {
             res.writeHead(200, { 'Content-Type': MIME['.html'] });
             fs.createReadStream(index).pipe(res);

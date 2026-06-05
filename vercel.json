@@ -6,22 +6,23 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api",
-      "dest": "server.js"
+      "source": "/api",
+      "destination": "server.js"
     },
     {
-      "src": "/product-evaluate",
-      "dest": "server.js"
+      "source": "/product-evaluate",
+      "destination": "server.js"
     },
     {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "source": "/(.*)",
+      "destination": "/$1"
     }
   ]
 }
-  ],
+  ]
+}  ],
   "routes": [
     {
       "src": "/(api|product-evaluate).*",
